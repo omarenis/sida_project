@@ -1,0 +1,48 @@
+{% extends 'template.html' %}
+{% block header %}
+    <nav class="navbar w-auto navbar-expand-lg navbar-light bg-transparent d-flex align-items-center">
+        <div class="container-fluid w-100">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='logo.png') }}"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <h1 class="text-white h1 text-center" style="width: 80%">Sida Quiz</h1>
+            <div class="collapse navbar-collapse" style="width: 4%"  id="navbarNavDropdown">
+                <div class="nav d-flex align-items-center justify-content-evenly">
+                        <img src="{{ url_for('static', filename='1.webp') }}" class="img-thumbnail" style="border-radius: 24px; width: 50px; height: 50px; margin-right: 25px" alt="...">
+                        <a type="button" href="{{ url_for('logout') }}">logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block body %}
+    <div class="container bg-white w-75 h-50 mx-auto">
+        <div class="alert alert-info text-white" style="background-color: #032352">
+            {{ question.get('question') }}
+        </div>
+        <form method="post" action="{{ url_for('quiz', numero=numero) }}">
+            {% for choix in question.get('choix') %}
+                <div class="d-block">
+                    <div class="form-check">
+                        <input class="form-check-input" value="{{ choix }}" type="radio" name="choix" id="{{ choix }}"
+                               onchange="() => {handleChange({{ choix }}, {{ correct }}); console.log('clicked')}">
+                        <label class="form-check-label" for="{{ choix }}">
+                            {{ choix }}
+                        </label>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="d-none comment" id="#comment">
+                {{ comment }}
+            </div>
+            <div class="d-flex justify-content-evenly">
+                <button class="btn btn-dark" type="reset">Annuler</button>
+                <button class="btn" style="background-color: #FDC911" type="submit">valider</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'template.html' %}
+{% block style %}
+    <style>
+        h1 {
+            font-family: "Roboto";
+            font-weight: 600;
+            font-size: 24px;
+            color: #FDC911;
+        }
+    </style>
+{% endblock %}
+{% block header %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent d-flex align-items-center">
+        <div class="container-fluid w-100">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='logo.png') }}"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <h1 class="text-white h1 text-center" style="width: 75%">Sida Quiz</h1>
+            <div class="collapse navbar-collapse" style="width: 25%"  id="navbarNavDropdown">
+                <div class="nav d-flex align-items-center justify-content-evenly">
+                    {% if current_user.is_authenticated %}
+                        <img src="{{ url_for('static', filename='1.webp') }}" class="img-thumbnail" style="border-radius: 24px; width: 50px; height: 50px; margin-right: 25px" alt="...">
+                        <a type="button" href="{{ url_for('logout') }}">logout</a>
+                    {% else %}
+                            <a class="nav-link text-white" href="{{ url_for('login') }}">Se Connecter</a>
+                            <a href="{{ url_for('signup') }}" class="nav-link">Créer compte</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block body %}
+    <div class="container bg-white w-75 h-75 mx-auto">
+        <h1 class="text-center pt-2 mb-5">Se Connecter</h1>
+        <form class="container mx-auto" method="post" action="{{ url_for('login') }}">
+        {{ csrf_token }}
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="alert alert-danger">
+                            {{ message }}
+            </p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                         class="bi bi-envelope-fill text-center " viewBox="0 0 16 16">
+                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                    </svg>
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" placeholder="email" class="form-control" id="staticEmail" name="email" required>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                         class="bi bi-lock-fill" viewBox="0 0 16 16">
+                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                    </svg>
+                </label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" placeholder="password" id="inputPassword" name="password" required>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="retypePassword" class="col-sm-2 col-form-label text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                         class="bi bi-lock-fill" viewBox="0 0 16 16">
+                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                    </svg>
+                </label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" placeholder="password" id="retypePassword" name="retypePassword" required>
+                </div>
+            </div>
+            <div class="d-flex justify-content-evenly mt-5">
+                <button class="btn text-white" type="reset" style="background: black">Annuler</button>
+                <button class="btn btn-success">Se connecter</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
