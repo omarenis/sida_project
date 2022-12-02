@@ -101,6 +101,7 @@ questions = [
         'comment': "(L&#39;autotest VIH permet le dépistage du VIH, le virus du SIDA. Il est réalisé à partir "
                    "d&#39;une goutte desang et grâce à un autopiqueur) "
     },
+
 ]
 
 
